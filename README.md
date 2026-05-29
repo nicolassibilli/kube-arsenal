@@ -1,14 +1,16 @@
-# Kubernetes Administration Workstation Bootstrap
+# kube-arsenal
 
 ![Shell](https://img.shields.io/badge/shell-bash-blue)
 ![Platform](https://img.shields.io/badge/platform-Ubuntu%20%7C%20Debian%20%7C%20WSL2-green)
 ![Version](https://img.shields.io/badge/version-v1.0.0-lightgrey)
 
+A Kubernetes administration workstation toolkit for DevOps, security, policy, troubleshooting, and productivity workflows.
+
 ## Overview
 
-`install-k8s-admin-workstation.sh` is an idempotent bootstrap script used to install, configure, and validate a Kubernetes administration workstation.
+`kube-arsenal.sh` is an idempotent bootstrap and validation script used to install, configure, and check a Kubernetes administration workstation.
 
-It is designed for Cloud, DevOps, SRE, and Kubernetes administration workflows where a local CLI environment must provide the right balance between daily operations, troubleshooting, manifest validation, security scanning, secrets handling, and policy-as-code tooling.
+It provides a curated CLI toolbox for Kubernetes administrators, DevOps engineers, platform engineers, and SREs who need a consistent local environment for cluster operations, troubleshooting, manifest validation, security scanning, secrets handling, and policy-as-code workflows.
 
 The script provides two main execution modes:
 
@@ -129,38 +131,38 @@ The script installs `krew` and the following plugins:
 ### Display help
 
 ```bash
-./install-k8s-admin-workstation.sh
+./kube-arsenal.sh
 ```
 
 or:
 
 ```bash
-./install-k8s-admin-workstation.sh --help
+./kube-arsenal.sh --help
 ```
 
 ### Install and configure the workstation
 
 ```bash
-chmod +x install-k8s-admin-workstation.sh
-./install-k8s-admin-workstation.sh --install
+chmod +x kube-arsenal.sh
+./kube-arsenal.sh --install
 ```
 
 Short form:
 
 ```bash
-./install-k8s-admin-workstation.sh -i
+./kube-arsenal.sh -i
 ```
 
 ### Check installed tools
 
 ```bash
-./install-k8s-admin-workstation.sh --check
+./kube-arsenal.sh --check
 ```
 
 Short form:
 
 ```bash
-./install-k8s-admin-workstation.sh -c
+./kube-arsenal.sh -c
 ```
 
 ---
@@ -176,13 +178,13 @@ Short form:
 Example:
 
 ```bash
-INSTALL_DOCKER=true ./install-k8s-admin-workstation.sh --install
+INSTALL_DOCKER=true ./kube-arsenal.sh --install
 ```
 
 Example with a custom shell configuration file:
 
 ```bash
-SHELL_RC="$HOME/.bashrc" ./install-k8s-admin-workstation.sh --install
+SHELL_RC="$HOME/.bashrc" ./kube-arsenal.sh --install
 ```
 
 ---
@@ -196,7 +198,7 @@ By default, the script does not install Docker if the `docker` binary is missing
 To force Linux-side Docker installation:
 
 ```bash
-INSTALL_DOCKER=true ./install-k8s-admin-workstation.sh --install
+INSTALL_DOCKER=true ./kube-arsenal.sh --install
 ```
 
 ---
@@ -214,8 +216,8 @@ Default target:
 The block is delimited by:
 
 ```bash
-# >>> k8s-admin-workstation managed block >>>
-# <<< k8s-admin-workstation managed block <<<
+# >>> kube-arsenal managed block >>>
+# <<< kube-arsenal managed block <<<
 ```
 
 If the block already exists, it is replaced cleanly. This prevents duplicate aliases or functions after repeated executions.
@@ -324,7 +326,7 @@ kdeprecated-kubent
 The check mode prints a categorized inventory of the workstation tools.
 
 ```bash
-./install-k8s-admin-workstation.sh --check
+./kube-arsenal.sh --check
 ```
 
 It validates:
@@ -375,7 +377,7 @@ These are stack-specific and can be installed later if needed.
 ### 1. Install the toolchain
 
 ```bash
-./install-k8s-admin-workstation.sh --install
+./kube-arsenal.sh --install
 ```
 
 ### 2. Reload shell configuration
@@ -387,7 +389,7 @@ source ~/.zshrc
 ### 3. Validate installation
 
 ```bash
-./install-k8s-admin-workstation.sh --check
+./kube-arsenal.sh --check
 ```
 
 ### 4. Validate Kubernetes manifests
@@ -420,7 +422,7 @@ Example:
 
 ```bash
 docker run --rm -it \
-  -v "$PWD/install-k8s-admin-workstation.sh:/tmp/install-k8s-admin-workstation.sh:ro" \
+  -v "$PWD/kube-arsenal.sh:/tmp/kube-arsenal.sh:ro" \
   ubuntu:24.04 \
   bash
 ```
@@ -436,11 +438,11 @@ echo "testuser ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/testuser
 chmod 0440 /etc/sudoers.d/testuser
 
 su - testuser
-cp /tmp/install-k8s-admin-workstation.sh ~/
-chmod +x ~/install-k8s-admin-workstation.sh
+cp /tmp/kube-arsenal.sh ~/
+chmod +x ~/kube-arsenal.sh
 
-INSTALL_DOCKER=false SHELL_RC="$HOME/.zshrc" ~/install-k8s-admin-workstation.sh --install
-~/install-k8s-admin-workstation.sh --check
+INSTALL_DOCKER=false SHELL_RC="$HOME/.zshrc" ~/kube-arsenal.sh --install
+~/kube-arsenal.sh --check
 ```
 
 This validates:
@@ -485,6 +487,19 @@ This script does not configure:
 - service mesh control planes
 
 It installs and configures the local CLI workstation only.
+
+---
+
+## Repository structure
+
+Recommended minimal repository layout:
+
+```text
+.
+├── README.md
+├── LICENSE
+└── kube-arsenal.sh
+```
 
 ---
 
